@@ -6,7 +6,6 @@ import flatpickrLib from 'flatpickr';
 import FlatPicker from 'react-flatpickr';
 import { useState } from 'react';
 import { FilterData, Gender } from '../../types';
-import { promisify } from 'util';
 
 flatpickrLib.localize(Portuguese);
 
