@@ -26,6 +26,42 @@ function SalesTable() {
             <td>Crédito</td>
             <td>R$ 540.000,00</td>
           </tr>
+          <tr>
+            <td>#341</td>
+            <td>15/11/1980</td>
+            <td>Masculino</td>
+            <td>Roupas e acessórios</td>
+            <td>Quebec</td>
+            <td>Crédito</td>
+            <td>R$ 540.000,00</td>
+          </tr>
+          <tr>
+            <td>#341</td>
+            <td>15/11/1980</td>
+            <td>Masculino</td>
+            <td>Roupas e acessórios</td>
+            <td>Quebec</td>
+            <td>Crédito</td>
+            <td>R$ 540.000,00</td>
+          </tr>
+          <tr>
+            <td>#341</td>
+            <td>15/11/1980</td>
+            <td>Masculino</td>
+            <td>Roupas e acessórios</td>
+            <td>Quebec</td>
+            <td>Crédito</td>
+            <td>R$ 540.000,00</td>
+          </tr>
+          <tr>
+            <td>#341</td>
+            <td>15/11/1980</td>
+            <td>Masculino</td>
+            <td>Roupas e acessórios</td>
+            <td>Quebec</td>
+            <td>Crédito</td>
+            <td>R$ 540.000,00</td>
+          </tr>
         </tbody>
       </table>
     </div>
