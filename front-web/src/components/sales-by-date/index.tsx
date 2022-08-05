@@ -1,52 +1,23 @@
-import { url } from 'inspector';
-import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { makeRequest } from '../../requests';
-import { chartOptions } from './helpers';
+import { useEffect, useState } from 'react';
+import { makeRequest } from '../../utils/requests';
+import { ChartSeriesData, SalesByDate } from '../../types';
+import { buildChartSeries, chartOptions, sumSalesByDate } from './helpers';
+import { formatPrice } from '../../utils/formatters';
+
 import './styles.css';
 
-const initialData = [
-  {
-    x: '2020-01-01',
-    y: 54
-  },
-  {
-    x: '2020-02-01',
-    y: 66
-  },
-  {
-    x: '2020-03-01',
-    y: 34
-  },
-  {
-    x: '2020-04-01',
-    y: 76
-  },
-  {
-    x: '2020-05-01',
-    y: 66
-  },
-  {
-    x: '2020-06-01',
-    y: 65
-  },
-  {
-    x: '2020-07-01',
-    y: 60
-  },
-  {
-    x: '2020-08-01',
-    y: 80
-  }
-];
-
-function SalesByDate() {
-  const [salesByDate, setSalesByDate] = useState();
+function SalesByDateComponent() {
+  const [chartSeries, setChartSeries] = useState<ChartSeriesData[]>([]);
+  const [totalSum, setTotalSum] = useState(0);
   useEffect(() => {
     makeRequest
-      .get('/sales/by-date?minDate=2017-01-01&maxDate=2017-01-31&gender=FEMALE')
+      .get<SalesByDate[]>('/sales/by-date?minDate=2017-01-01&maxDate=2017-01-31&gender=FEMALE')
       .then((response) => {
-        console.log(response.data);
+        const newChartSeries = buildChartSeries(response.data);
+        setChartSeries(newChartSeries);
+        const newTotalSum = sumSalesByDate(response.data);
+        setTotalSum(newTotalSum);
       });
   }, []);
   return (
@@ -57,7 +28,7 @@ function SalesByDate() {
       </div>
       <div className="sales-by-date-data">
         <div className="sales-by-date-quantity-container">
-          <h2 className="sales-by-date-quantity">R$ 464.988,00</h2>
+          <h2 className="sales-by-date-quantity">{formatPrice(totalSum)}</h2>
           <span className="sales-by-date-quantity-label">Vendas no período</span>
           <span className="sales-by-date-quantity-description">
             O gráfico mostra as vendas em todas as lojas
@@ -66,7 +37,7 @@ function SalesByDate() {
         <div className="sales-by-date-chart">
           <ReactApexChart
             options={chartOptions}
-            series={[{ name: 'Vendas', data: initialData }]}
+            series={[{ name: 'Vendas', data: chartSeries }]}
             type="bar"
             height={240}
             width="100%"
@@ -77,4 +48,4 @@ function SalesByDate() {
   );
 }
 
-export default SalesByDate;
+export default SalesByDateComponent;
