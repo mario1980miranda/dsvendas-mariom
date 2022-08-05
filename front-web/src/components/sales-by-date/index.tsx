@@ -1,13 +1,17 @@
 import ReactApexChart from 'react-apexcharts';
 import { useEffect, useState } from 'react';
 import { makeRequest } from '../../utils/requests';
-import { ChartSeriesData, SalesByDate } from '../../types';
+import { ChartSeriesData, FilterData, SalesByDate } from '../../types';
 import { buildChartSeries, chartOptions, sumSalesByDate } from './helpers';
 import { formatPrice } from '../../utils/formatters';
 
 import './styles.css';
 
-function SalesByDateComponent() {
+type Props = {
+  filterData?: FilterData;
+};
+
+function SalesByDateComponent({ filterData }: Props) {
   const [chartSeries, setChartSeries] = useState<ChartSeriesData[]>([]);
   const [totalSum, setTotalSum] = useState(0);
   useEffect(() => {
@@ -24,7 +28,7 @@ function SalesByDateComponent() {
     <div className="sales-by-date-container base-card">
       <div>
         <h4 className="sales-by-date-title">Evolução das vendas</h4>
-        <span className="sales-by-date-period">01/01/2017 a 31/01/2017</span>
+        <span className="sales-by-date-period">{filterData?.dates?.[0].toISOString()}</span>
       </div>
       <div className="sales-by-date-data">
         <div className="sales-by-date-quantity-container">
