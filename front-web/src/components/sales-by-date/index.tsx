@@ -32,7 +32,7 @@ function SalesByDateComponent({ filterData }: Props) {
     <div className="sales-by-date-container base-card">
       <div>
         <h4 className="sales-by-date-title">Evolução das vendas</h4>
-        {filterData?.dates && (
+        {filterData?.dates && filterData?.dates.length > 1 && (
           <span className="sales-by-date-period">
             {formatDate(filterData?.dates?.[0])} até {formatDate(filterData?.dates?.[1])}
           </span>
