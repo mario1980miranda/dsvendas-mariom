@@ -22,3 +22,18 @@ export type SalesSummaryData = {
   avg: number;
   count: number;
 };
+
+export type SalesByStore = {
+  storeName: string;
+  sum: number;
+};
+
+export type SalesByPaymentMehod = {
+  description: string;
+  sum: number;
+};
+
+export type PieChartConfig = {
+  labels: string[];
+  series: number[];
+};
