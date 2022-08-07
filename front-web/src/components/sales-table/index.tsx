@@ -1,6 +1,34 @@
+import { useEffect, useMemo, useState } from 'react';
+import { FilterData, Gender, Sale, SalesResponse } from '../../types';
+import { formatDate, formatPrice } from '../../utils/formatters';
+import { buildFilterParams, makeRequest } from '../../utils/requests';
 import './styles.css';
 
-function SalesTable() {
+type Props = {
+  filterData?: FilterData;
+};
+
+function SalesTable({ filterData }: Props) {
+  const [sales, setSales] = useState<Sale[]>([]);
+  const params = useMemo(() => buildFilterParams(filterData), [filterData]);
+  const formatGender = (gender: Gender) => {
+    const textByGender = {
+      MALE: 'Masculino',
+      FEMALE: 'Feminino',
+      OTHER: 'Outros'
+    };
+    return textByGender[gender];
+  };
+  useEffect(() => {
+    makeRequest
+      .get<SalesResponse>('/sales', { params })
+      .then((response) => {
+        setSales(response.data.content);
+      })
+      .catch(() => {
+        console.log('Error to fetch sales');
+      });
+  }, [params]);
   return (
     <div className="sales-table-container base-card">
       <h3 className="sales-table-title">Vendas Recentes</h3>
@@ -17,51 +45,17 @@ function SalesTable() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>#341</td>
-            <td>15/11/1980</td>
-            <td>Masculino</td>
-            <td>Roupas e acessórios</td>
-            <td>Quebec</td>
-            <td>Crédito</td>
-            <td>R$ 540.000,00</td>
-          </tr>
-          <tr>
-            <td>#341</td>
-            <td>15/11/1980</td>
-            <td>Masculino</td>
-            <td>Roupas e acessórios</td>
-            <td>Quebec</td>
-            <td>Crédito</td>
-            <td>R$ 540.000,00</td>
-          </tr>
-          <tr>
-            <td>#341</td>
-            <td>15/11/1980</td>
-            <td>Masculino</td>
-            <td>Roupas e acessórios</td>
-            <td>Quebec</td>
-            <td>Crédito</td>
-            <td>R$ 540.000,00</td>
-          </tr>
-          <tr>
-            <td>#341</td>
-            <td>15/11/1980</td>
-            <td>Masculino</td>
-            <td>Roupas e acessórios</td>
-            <td>Quebec</td>
-            <td>Crédito</td>
-            <td>R$ 540.000,00</td>
-          </tr>
-          <tr>
-            <td>#341</td>
-            <td>15/11/1980</td>
-            <td>Masculino</td>
-            <td>Roupas e acessórios</td>
-            <td>Quebec</td>
-            <td>Crédito</td>
-            <td>R$ 540.000,00</td>
-          </tr>
+          {sales.map((sale) => (
+            <tr key={sale.id}>
+              <td>#{sale.id}</td>
+              <td>{formatDate(sale.date)}</td>
+              <td>{formatGender(sale.gender)}</td>
+              <td>{sale.categoryName}</td>
+              <td>{sale.storeName}</td>
+              <td>{sale.paymentMethod}</td>
+              <td>{formatPrice(sale.total)}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
