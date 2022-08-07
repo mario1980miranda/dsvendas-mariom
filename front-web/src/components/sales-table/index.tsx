@@ -2,15 +2,22 @@ import { useEffect, useMemo, useState } from 'react';
 import { FilterData, Gender, Sale, SalesResponse } from '../../types';
 import { formatDate, formatPrice } from '../../utils/formatters';
 import { buildFilterParams, makeRequest } from '../../utils/requests';
+
 import './styles.css';
 
 type Props = {
   filterData?: FilterData;
 };
 
+const extraParamas = {
+  page: 0,
+  size: 12,
+  sort: 'date,desc'
+};
+
 function SalesTable({ filterData }: Props) {
   const [sales, setSales] = useState<Sale[]>([]);
-  const params = useMemo(() => buildFilterParams(filterData), [filterData]);
+  const params = useMemo(() => buildFilterParams(filterData, extraParamas), [filterData]);
   const formatGender = (gender: Gender) => {
     const textByGender = {
       MALE: 'Masculino',

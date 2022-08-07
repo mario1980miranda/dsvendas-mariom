@@ -5,6 +5,11 @@
   justify-content: center;
 }
 
+.pie-chart-card:hover {
+  background-color: var(--grey-light-100-color);
+  transition: background 0.5s;
+}
+
 .apexcharts-legend.apexcharts-align-center {
   flex-direction: column;
   align-items: center;

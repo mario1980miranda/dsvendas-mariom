@@ -3,6 +3,10 @@
   padding: 25px 15px 50px 30px;
 }
 
+.sales-by-date-container:hover {
+  background-color: var(--grey-light-100-color);
+}
+
 .sales-by-date-title {
   font-size: 24px;
   color: var(--light-color);
